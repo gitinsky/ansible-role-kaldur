@@ -1,0 +1,12 @@
+---
+- name: checkout kaldur repo
+  git: repo=https://github.com/alexclear/kaldur.git dest=/opt/kaldur
+
+- name: install jester
+  shell: nimble install -y jester
+
+- name: checkout prometheus client repo
+  git: repo=https://github.com/alexclear/prometheus_client_nim.git dest=/root/.nimble/pkgs/prometheus-0.1.0
+
+- name: build kaldur
+  shell: cd /opt/kaldur && nim c --threads:on kaldur.nim
