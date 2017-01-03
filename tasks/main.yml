@@ -8,5 +8,14 @@
 - name: checkout prometheus client repo
   git: repo=https://github.com/alexclear/prometheus_client_nim.git dest=/root/.nimble/pkgs/prometheus-0.1.0
 
+- name: create /var/lib/kaldur
+  file: state=directory dest=/var/lib/kaldur
+
 - name: build kaldur
   shell: cd /opt/kaldur && nim c --threads:on kaldur.nim
+
+- name: install perf
+  apt: name="linux-tools-{{ ansible_kernel }}" state=present
+
+- name: clone FlameGraph
+  git: repo=https://github.com/brendangregg/FlameGraph.git dest=/opt/FlameGraph
