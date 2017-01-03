@@ -1,0 +1,1 @@
+kaldur ALL=(ALL:ALL) NOPASSWD: /usr/bin/perf record *, /bin/chown kaldur\:kaldur /var/lib/kaldur/perf*

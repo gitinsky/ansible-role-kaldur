@@ -8,8 +8,11 @@
 - name: checkout prometheus client repo
   git: repo=https://github.com/alexclear/prometheus_client_nim.git dest=/root/.nimble/pkgs/prometheus-0.1.0
 
+- name: add kaldur user
+  user: name=kaldur state=present
+
 - name: create /var/lib/kaldur
-  file: state=directory dest=/var/lib/kaldur
+  file: state=directory dest=/var/lib/kaldur owner=kaldur group=kaldur
 
 - name: build kaldur
   shell: cd /opt/kaldur && nim c --threads:on kaldur.nim
@@ -19,3 +22,12 @@
 
 - name: clone FlameGraph
   git: repo=https://github.com/brendangregg/FlameGraph.git dest=/opt/FlameGraph
+
+- name: put sudoers file
+  template: src=kaldur dest=/etc/sudoers.d/kaldur owner=root group=root mode=0440
+
+- name: put systemd unit file
+  template: src=kaldur.service dest=/etc/systemd/system/kaldur.service owner=root group=root mode=0644
+
+- name: enable kaldur service
+  service: name=kaldur enabled=yes state=started

@@ -1,0 +1,15 @@
+[Unit]
+Description=Kaldur Service
+Documentation=https://github.com/alexclear/kaldur
+
+[Service]
+WorkingDirectory=/opt/kaldur
+User=kaldur
+Group=kaldur
+ExecStart=/opt/kaldur/kaldur
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
+Alias=kaldur.service
